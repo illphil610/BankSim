@@ -43,7 +43,8 @@ public class Bank {
         } catch(InterruptedException e) {
             e.printStackTrace();
         }
-        finally{semaphore.release();}
+        finally {
+            semaphore.release();}
         if (shouldTest()) test();
     }
 

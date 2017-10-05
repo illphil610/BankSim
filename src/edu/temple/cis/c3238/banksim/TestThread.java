@@ -16,7 +16,8 @@ public class TestThread extends Thread {
     @Override
     public void run(){
         int sum = 0;
-        try{bank.semaphore.acquire(10);
+        try {
+            bank.semaphore.acquire(10);
             for (Account account : accounts) {
                 System.out.printf("%s %s%n", Thread.currentThread().toString(), account.toString());
                 sum += account.getBalance();
@@ -24,7 +25,8 @@ public class TestThread extends Thread {
         } catch(InterruptedException e) {
             e.printStackTrace();
         }
-        finally {bank.semaphore.release(10);
+        finally {
+            bank.semaphore.release(10);
         }
 
         System.out.println(Thread.currentThread().toString() + "test #" + bank.testCount++ + " Sum: " + sum);
