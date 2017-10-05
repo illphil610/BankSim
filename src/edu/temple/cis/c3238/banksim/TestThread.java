@@ -6,11 +6,11 @@ public class TestThread extends Thread {
     private final int initialBalance;
     private final Account[] accounts;
 
-    public TestThread(Bank b, Account[] accounts ,int aCount, int startBalance) {
-        this.bank=b;
-        this.numAccounts=aCount;
-        this.initialBalance=startBalance;
-        this.accounts=accounts;
+    public TestThread(Bank bank, Account[] accounts ,int accountCount, int startBalance) {
+        this.bank = bank;
+        this.numAccounts = accountCount;
+        this.initialBalance = startBalance;
+        this.accounts = accounts;
     }
 
     @Override
@@ -22,10 +22,10 @@ public class TestThread extends Thread {
                 sum += account.getBalance();
             }
         } catch(InterruptedException e){}
-        finally{bank.semaphore.release(10);
+        finally {bank.semaphore.release(10);
         }
 
-        System.out.println(Thread.currentThread().toString() + "test #" + bank.testCount++ +" Sum: " + sum);
+        System.out.println(Thread.currentThread().toString() + "test #" + bank.testCount++ + " Sum: " + sum);
         if (sum != numAccounts * initialBalance) {
             System.out.println(Thread.currentThread().toString() + " Money was gained or lost");
             System.exit(1);

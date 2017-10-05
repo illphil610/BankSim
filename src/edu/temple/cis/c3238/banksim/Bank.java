@@ -40,7 +40,7 @@ public class Bank {
             if (accounts[from].withdraw(amount)) {
                 accounts[to].deposit(amount);
             }
-        } catch(InterruptedException e){
+        } catch(InterruptedException e) {
             e.printStackTrace();
         }
         finally{semaphore.release();}
