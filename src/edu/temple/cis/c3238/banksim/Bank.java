@@ -18,22 +18,22 @@ public class Bank {
     protected int testCount;
 
     public Bank(int numAccounts, int initialBalance) {
-        open = true;
-        this.initialBalance = initialBalance;
         this.numAccounts = numAccounts;
+        this.initialBalance = initialBalance;
+        semaphore = new Semaphore(this.numAccounts);
         accounts = new Account[numAccounts];
+        ntransacts = 0;
+        testCount =0 ;
+        open = true;
 
         for (int i = 0; i < accounts.length; i++) {
             accounts[i] = new Account(this, i, initialBalance);
         }
-        ntransacts = 0;
-
-        semaphore = new Semaphore(this.numAccounts);
-        testCount=0;
     }
 
     public void transfer(int from, int to, int amount) {
         accounts[from].waitForAvailableFunds(amount);
+
         if (!open) return;
         try {
             semaphore.acquire();
