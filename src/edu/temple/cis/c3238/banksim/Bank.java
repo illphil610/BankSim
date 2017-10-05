@@ -5,16 +5,17 @@ import java.util.concurrent.Semaphore;
 /**
  * @author Cay Horstmann
  * @author Modified by Paul Wolfgang
+ * @author Also modified by Philip Cappelli
  */
 public class Bank {
     public static final int NTEST = 10;
     private final Account[] accounts;
+    private TestThread testThread;
+    public Semaphore semaphore;
     private long ntransacts = 0;
     private final int initialBalance;
     private final int numAccounts;
     private boolean open;
-    private TestThread testThread;
-    protected Semaphore semaphore;
     protected int testCount;
 
     public Bank(int numAccounts, int initialBalance) {
@@ -33,7 +34,6 @@ public class Bank {
 
     public void transfer(int from, int to, int amount) {
         accounts[from].waitForAvailableFunds(amount);
-
         if (!open) return;
         try {
             semaphore.acquire();

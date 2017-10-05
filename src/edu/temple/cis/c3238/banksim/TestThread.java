@@ -1,12 +1,12 @@
 package edu.temple.cis.c3238.banksim;
 
 public class TestThread extends Thread {
+    private final Account[] accounts;
     private final Bank bank;
     private final int numAccounts;
     private final int initialBalance;
-    private final Account[] accounts;
 
-    public TestThread(Bank bank, Account[] accounts ,int accountCount, int startBalance) {
+    public TestThread(Bank bank, Account[] accounts , int accountCount, int startBalance) {
         this.bank = bank;
         this.numAccounts = accountCount;
         this.initialBalance = startBalance;
@@ -21,7 +21,9 @@ public class TestThread extends Thread {
                 System.out.printf("%s %s%n", Thread.currentThread().toString(), account.toString());
                 sum += account.getBalance();
             }
-        } catch(InterruptedException e){}
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
         finally {bank.semaphore.release(10);
         }
 
