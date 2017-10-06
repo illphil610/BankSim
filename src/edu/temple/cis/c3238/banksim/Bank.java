@@ -44,7 +44,8 @@ public class Bank {
             e.printStackTrace();
         }
         finally {
-            semaphore.release();}
+            semaphore.release();
+        }
         if (shouldTest()) test();
     }
 

@@ -14,7 +14,7 @@ public class TestThread extends Thread {
     }
 
     @Override
-    public void run(){
+    public void run() {
         int sum = 0;
         try {
             bank.semaphore.acquire(10);
