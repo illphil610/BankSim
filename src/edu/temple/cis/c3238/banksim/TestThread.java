@@ -1,8 +1,8 @@
 package edu.temple.cis.c3238.banksim;
 
 /**
- * CIS 3238 Software Design - Lab 4
  * @author Philip Cappelli
+ * CIS 3238 Software Design - Lab 4
  *
  * TestThread uses the Semaphore located in Bank.java to aquire 10
  * permits (1 for each account) and to lock the critical section during
@@ -44,7 +44,7 @@ public class TestThread extends Thread {
             bank.semaphore.release(10);
         }
 
-        System.out.println(Thread.currentThread().toString() + "test #" + bank.testCount++ + " Sum: " + sum);
+        System.out.println(Thread.currentThread().toString() + " Sum: " + sum);
         if (sum != numAccounts * initialBalance) {
             System.out.println(Thread.currentThread().toString() + " Money was gained or lost");
             System.exit(1);

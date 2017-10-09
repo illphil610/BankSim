@@ -21,7 +21,6 @@ public class Bank {
     private final int initialBalance;
     private final int numAccounts;
     private boolean open;
-    protected int testCount;
 
     public Bank(int numAccounts, int initialBalance) {
         this.numAccounts = numAccounts;
