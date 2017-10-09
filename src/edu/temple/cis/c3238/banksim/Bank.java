@@ -8,9 +8,9 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author Modified by Paul Wolfgang
  *
  * @author Modified again by Philip Cappelli
- *  |?| Implemented a Semaphore to aquire/release from 10 permits so when the test
- *  |?| thread runs, a lock is in place preventing all of the accounts from making
- *  |?| transactions thus allowing for an accurate balance test result upon request.
+ *  |?| Implemented a lock so when the test thread runs, a lock is in place preventing
+ *  |?| all of the accounts from making transactions thus allowing for an accurate balance
+ *  |?| test result upon request.
  */
 
 public class Bank {

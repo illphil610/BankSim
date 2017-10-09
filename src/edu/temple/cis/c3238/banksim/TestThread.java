@@ -4,6 +4,7 @@ package edu.temple.cis.c3238.banksim;
  * @author Philip Cappelli
  * CIS 3238 Software Design - Lab 4
  *
+ * First Solution... (commented out)
  * TestThread uses the Semaphore located in Bank.java to aquire 10
  * permits (1 for each account) and to lock the critical section during
  * testing.  This benefits the bank test because all 10 accounts will not
@@ -11,6 +12,12 @@ package edu.temple.cis.c3238.banksim;
  * TestThread extends Thread because in this context I didn't feel
  * implementing Runnable would make the performance any better so I just used
  * inheritence instead.
+ *
+ * Second Solution...
+ * TestThread uses a ReentrantLock to lock the critical section to prevent
+ * other threads from accessing resources during the account balance test.
+ * The semaphore method account balances were not changing, but the ReentrantLock
+ * was allowing for different balances after each test.
  */
 
 public class TestThread extends Thread {
@@ -32,6 +39,8 @@ public class TestThread extends Thread {
         try {
             // Using the Semaphore from Bank.java to acquire 10 permits before testing
             //bank.semaphore.acquire(10);
+
+            // Lock critical section to prevent race conditions
             bank.lock.lock();
             for (Account account : accounts) {
                 System.out.printf("%s %s%n", Thread.currentThread().toString(), account.toString());
@@ -43,7 +52,7 @@ public class TestThread extends Thread {
         bank.lock.unlock();
         //finally {
             // Release the permits to allow the accounts to proceed with more transactions
-            //.semaphore.release(10);
+            // semaphore.release(10);
        // }
 
         System.out.println(Thread.currentThread().toString() + " Sum: " + sum);
