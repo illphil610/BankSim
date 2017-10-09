@@ -18,11 +18,11 @@ public class Bank {
     private final Account[] accounts;
     private TestThread testThread;
     public final Semaphore semaphore;
+    public ReentrantLock lock;
     private long ntransacts = 0;
     private final int initialBalance;
     private final int numAccounts;
     private boolean open;
-    public ReentrantLock lock;
 
     public Bank(int numAccounts, int initialBalance) {
         this.numAccounts = numAccounts;
@@ -46,6 +46,8 @@ public class Bank {
         try {
             // Request a permit, if available...become blocked if not available.
             // semaphore.acquire();
+
+            // using the Reentrant lock to keep all other threads using the bank object
             lock.lock();
             if (accounts[from].withdraw(amount)) {
                 accounts[to].deposit(amount);
@@ -53,11 +55,13 @@ public class Bank {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        finally {
+        //finally {
             // Release the permit when transaction is complete.
             // semaphore.release();
-            lock.unlock();
-        }
+        //}
+
+        // Unlock object after critical section
+        lock.unlock();
         if (shouldTest()) {
             test();
         }
