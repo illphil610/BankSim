@@ -31,18 +31,20 @@ public class TestThread extends Thread {
         int sum = 0;
         try {
             // Using the Semaphore from Bank.java to acquire 10 permits before testing
-            bank.semaphore.acquire(10);
+            //bank.semaphore.acquire(10);
+            bank.lock.lock();
             for (Account account : accounts) {
                 System.out.printf("%s %s%n", Thread.currentThread().toString(), account.toString());
                 sum += account.getBalance();
             }
-        } catch(InterruptedException e) {
+        } catch(Exception e) {
             e.printStackTrace();
         }
-        finally {
+        bank.lock.unlock();
+        //finally {
             // Release the permits to allow the accounts to proceed with more transactions
-            bank.semaphore.release(10);
-        }
+            //.semaphore.release(10);
+       // }
 
         System.out.println(Thread.currentThread().toString() + " Sum: " + sum);
         if (sum != numAccounts * initialBalance) {

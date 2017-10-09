@@ -1,6 +1,7 @@
 package edu.temple.cis.c3238.banksim;
 
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Cay Horstmann
@@ -21,10 +22,12 @@ public class Bank {
     private final int initialBalance;
     private final int numAccounts;
     private boolean open;
+    public ReentrantLock lock;
 
     public Bank(int numAccounts, int initialBalance) {
         this.numAccounts = numAccounts;
         this.initialBalance = initialBalance;
+        lock = new ReentrantLock();
         semaphore = new Semaphore(this.numAccounts);
         accounts = new Account[numAccounts];
         ntransacts = 0;
@@ -42,16 +45,18 @@ public class Bank {
         }
         try {
             // Request a permit, if available...become blocked if not available.
-            semaphore.acquire();
+            // semaphore.acquire();
+            lock.lock();
             if (accounts[from].withdraw(amount)) {
                 accounts[to].deposit(amount);
             }
-        } catch(InterruptedException e) {
+        } catch(Exception e) {
             e.printStackTrace();
         }
         finally {
             // Release the permit when transaction is complete.
-            semaphore.release();
+            // semaphore.release();
+            lock.unlock();
         }
         if (shouldTest()) {
             test();

@@ -16,6 +16,7 @@ class TransferThread extends Thread {
 
     @Override
     public void run() {
+        System.out.println("Transfer Run");
         for (int i = 0; i < 10000; i++) {
             int toAccount = (int) (bank.size() * Math.random());
             int amount = (int) (maxAmount * Math.random());
